@@ -1,10 +1,13 @@
-﻿namespace AnnonceManager.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AnnonceManager.Models
 {
     public class Candidature
     {
         public string? CandidatId { get; set; }
         public int OffreId { get; set; }
         public DateTime CandDate { get; set; }
+        [Required]
         public int Status { get; set; }
 
 
