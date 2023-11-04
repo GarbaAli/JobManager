@@ -44,8 +44,9 @@
                             <img src="~/images/icon/logo-white.png" alt="CoolAdmin" />
                         </a>
                     </div>
-                    @* <div class="header__navbar">
+                    <div class="header__navbar">
                         <ul class="list-unstyled">
+                            @*
                             <li class="has-sub">
                                 <a href="#">
                                     <i class="fas fa-tachometer-alt"></i>Dashboard
@@ -65,13 +66,13 @@
                                         <a href="index4.html">Dashboard 4</a>
                                     </li>
                                 </ul>
-                            </li>
+                            </li> *@
                             <li>
-                                <a href="#">
-                                    <i class="fas fa-shopping-basket"></i>
-                                    <span class="bot-line"></span>eCommerce
+                                <a asp-action="Index" asp-controller="Offre">
+                                    <i class="fas fa-users"></i>
+                                    <span class="bot-line"></span>Toutes les Offres
                                 </a>
-                            </li>
+                            </li> @*
                             <li>
                                 <a href="table.html">
                                     <i class="fas fa-trophy"></i>
@@ -135,9 +136,9 @@
                                         <a href="typo.html">Typography</a>
                                     </li>
                                 </ul>
-                            </li>
+                            </li>*@
                         </ul>
-                    </div> *@
+                    </div> 
 
                     <div class="header__tool">
                         @* NOTIFICATIONS *@
@@ -231,37 +232,42 @@
                       @if (_signInManager.IsSignedIn(User) && User.Identity.Name != null)
                         {
                             ApplicationUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+                            var roles = await _userManager.GetRolesAsync(user);
 
                             <div class="account-wrap">
                                 <div class="account-item account-item--style2 clearfix js-item-menu">
                                     <div class="image">
-                                        <img src="~/images/icon/avatar-01.jpg" alt="@user.UserName" />
+                                        <img src="~/images/icon/avatar-01.jpg" alt="@user.Pseudo" />
                                     </div>
                                     <div class="content">
-                                        <a class="js-acc-btn" href="#">@User.Identity.Name</a>
+                                        <a class="js-acc-btn" href="#">@user.Pseudo</a>
                                     </div>
                                     <div class="account-dropdown js-dropdown">
                                         <div class="info clearfix">
                                             <div class="image">
                                                 <a href="#">
-                                                    <img src="~/images/icon/avatar-01.jpg" alt="@user.UserName" />
+                                                    <img src="~/images/icon/avatar-01.jpg" alt="@user.Pseudo" />
                                                 </a>
                                             </div>
                                             <div class="content">
                                                 <h5 class="name">
-                                                    <a href="#">@User.Identity.Name</a>
+                                                   @*  <a href="#">@user.Pseudo - <strong></strong></a> *@
+                                                   @foreach (var role in roles)
+                                                    {
+                                                       <strong>- @role - </strong> 
+                                                    }
                                                 </h5>
                                                 <span class="email">@user.Email</span>
                                             </div>
                                         </div>
                                         <div class="account-dropdown__body">
                                             <div class="account-dropdown__item">
-                                                <a asp-action="Detail" asp-route-id="@user.Id">
+                                                <a asp-controller="Account" asp-action="Detail" asp-route-id="@user.Id">
                                                     <i class="zmdi zmdi-account"></i>Mon Compte
                                                 </a>
                                             </div>
                                             <div class="account-dropdown__item">
-                                                <a href="#">
+                                                <a asp-action="List" asp-controller="Administration">
                                                     <i class="zmdi zmdi-settings"></i>Setting
                                                 </a>
                                             </div>

@@ -1,0 +1,179 @@
+﻿@model AccountViewModel
+
+@{
+    ViewBag.Title = "Detail de compte";
+    //var candidat = (Candidat)Model.UserAccount;
+}
+
+<div class="container">
+    <div style="margin:5% 10%" class="login">
+        @if (Model.roleName.Equals("Entreprise"))
+        {
+            <div class="row">
+                <div class="col-sm-6">
+                    <div style="width:100%" class="card">
+                        <div class="card-header">
+                            <strong class="card-title">
+                                <small>
+                                    <span class="badge badge-dark float-left mt-1">@Model.AdresseEnt</span>
+                                </small>
+                            </strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="mx-auto d-block">
+                                <img class="rounded-circle mx-auto d-block" src="~/images/icon/avatar-01.jpg" alt="Card image cap">
+                                <h5 class="text-sm-center mt-2 mb-1"><strong>@Model.LibelleEntreprise</strong></h5>
+                                <div class="location text-sm-center">
+                                    <i class="fa fa-messages"></i> @Model.Email
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="card-text text-sm-center">
+                                <strong>@Model.Pseudo</strong>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <a asp-action="EditEntreprise" asp-route-id="@Model.Id" class="btn btn-sm btn-dark" asp-controller="Account">Modifier son compte</a>
+                                </div>
+                                <div class="col-sm-6">
+                                  @*   <a asp-action="Edit" asp-controller="Account"></a> *@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title">Description</strong>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                @Model.Description
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <a asp-action="Create" asp-route-id="@Model.Id" class="btn btn-sm btn-dark" asp-controller="Offre">Nouvelle Offre</a>
+                        </div>
+                        <div class="col-sm-6">
+                            <a asp-action="List" class="btn btn-sm btn-info" asp-controller="Offre">Toutes mes Offres</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else // Espace Candidat --------------------------------------------------------------------
+        {
+            <div class="row">
+                <div class="col-sm-4">
+                    <div style="width:100%" class="card">
+                        <div class="card-header">
+                            <strong class="card-title">
+                               Annee d'experience
+                                <small>
+                                    <span class="badge badge-success float-right mt-1">@Model.Experience</span>
+                                </small>
+                            </strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="mx-auto d-block">
+                                <img class="rounded-circle mx-auto d-block" src="~/images/icon/avatar-01.jpg" alt="Card image cap">
+                                <h5 class="text-sm-center mt-2 mb-1"> @Model.LastName <strong>@Model.FirstName</strong></h5>
+                                <div class="location text-sm-center">
+                                    <i class="fa fa-messages"></i> @Model.Email
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="card-text text-sm-center">
+                                <strong>@Model.Pseudo</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="statistic__item">
+                                <h2 class="number">@Model.OffreCandidat.Count()</h2>
+                                <span class="desc"> Mes Candidatures </span>
+                                <div class="icon">
+                                    <i class="zmdi zmdi-calendar-note"></i>
+                                </div>
+                            </div>
+                        </div>
+                        @*Nombre de candidatures Rejeter*@
+                        <div class="col-sm-4"> 
+                            <div class="statistic__item">
+                                <h2 class="number">@Model.OffreCandidat.Where(o => o.CandidatLink.Any(c => c.Status == 0)).Count()</h2>
+                                <span class="desc">  Candidatures Rejetees </span>
+                                <div class="icon">
+                                    <i class="fa fa-times"></i>
+                                </div>
+                            </div>
+                        </div>
+                        @*Nombre de candidatures Valider*@
+                        <div class="col-sm-4">
+                            <div class="statistic__item">
+                                <h2 class="number">@Model.OffreCandidat.Where(o => o.CandidatLink.Any(c => c.Status == 2)).Count()</h2>
+                                <span class="desc">  Candidatures Acceptees </span>
+                                <div class="icon">
+                                    <i class="fa fa-check-circle"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if (Model.OffreCandidat.Count() == 0)
+                    {
+                        <div class="alert alert-primary" role="alert">
+                            Aucune candidature a votre Actif!
+                            <i class="fa fa-frown-o"></i>
+                        </div>
+                    }
+                    else
+                    {
+                        @foreach (var item in Model.OffreCandidat.Take(5))
+                        {
+                            <div class="card border border-secondary">
+                                <div class="card-header">
+                                    <strong class="card-title">
+                                        @item.IntitulePoste
+                                        <small>
+                                            @{
+                                                var Intstatus = item.CandidatLink.FirstOrDefault().Status;
+                                                var status = "En cours de Traitement";
+                                                var color = "dark";
+                                                if (Intstatus == 0)
+                                                {
+                                                    status = "Candidature Rejeter";
+                                                    color = "danger";
+                                                }
+                                                else if(Intstatus == 2)
+                                                {
+                                                    status = "Candidature Accepter";
+                                                    color = "success";
+                                                }
+                                                //
+                                            }
+                                            <span class="badge badge-@color float-right mt-1">@status</span>
+                                        </small>
+                                    </strong>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        @item.Description
+                                    </p>
+                                    <hr>
+                                    Postuler le <strong>@item.CandidatLink.FirstOrDefault().CandDate.ToString("dddd d MMMM yyyy")</strong>
+                                    <a asp-action="Detail" asp-route-OffreId="@item.OffreId" class="btn-sm btn-primary float-right" asp-controller="Offre">Voir Plus</a>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        }
+
+    </div>
+</div>

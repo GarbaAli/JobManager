@@ -1,4 +1,5 @@
 using AnnonceManager.Models;
+using AnnonceManager.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -16,7 +17,7 @@ builder.Services.AddDbContext<AppDbContext>(
 
 //DI
 
-
+builder.Services.AddScoped<IOfferRepository, OffreRepository>();
 //Contrainte du password lors de la creation du compte
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
@@ -58,6 +59,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Offre}/{action=Index}/{id?}");
 
 app.Run();

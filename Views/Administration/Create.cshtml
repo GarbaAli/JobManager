@@ -1,0 +1,33 @@
+﻿@model CreateRoleViewModel
+
+@{
+    ViewData["Title"] = "Nouveau Role";
+}
+
+<div class="container">
+    <div class="login-wrap">
+        <div class="login-content">
+           
+            <div class="login-form">
+                <form asp-action="Create" novalidate="novalidate">
+                    <div class="form-group">
+                        <label asp-for="RoleName" class="control-label mb-1"></label>
+                        <input id="cc-pament" asp-for="RoleName" class="form-control" >
+                    </div>
+                    <div>
+                        <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
+                            <i class="fa fa-tags fa-sm"></i>&nbsp;
+                            <span id="payment-button-amount">Nouveau Role</span>
+                        </button>
+                    </div>
+                </form>
+                <hr />
+                <div class="alert alert-danger text text-danger" asp-validation-summary="All" role="alert">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

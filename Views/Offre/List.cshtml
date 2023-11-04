@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Offre>
+
+@{
+    ViewData["Title"] = "Mes Offres d'empploies";
+}
+
+<div class="container">
+    
+    <div style="margin:5% 10%" class="login">
+     @if (Model.Count() != 0)
+        {
+            <section class="au-breadcrumb2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="au-breadcrumb-content">
+                                <div class="au-breadcrumb-left">
+                                    <h1>Toutes mes Offres</h1>
+                                </div>
+                                <a asp-controller="Offre" asp-action="Create" class="btn btn-dark">Nouvelle Offre</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- END BREADCRUMB-->
+            @foreach (var item in Model)
+            {
+                <div class="card border border-secondary">
+                    <div class="card-header">
+                        <strong class="card-title">
+                            @item.IntitulePoste    <span class="badge badge-primary float-left mt-1">@item.CandidatLink.Count</span>
+                            <small>
+                                <span class="badge badge-success float-right mt-1">@item.Lieu</span>
+                            </small>
+                        </strong>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            @item.Description
+                        </p>
+                        <strong>@item.Salaire XAF</strong> | @item.DateLine.ToString("dddd d MMMM yyyy")
+                        <a asp-action="Detail" asp-route-OffreId="@item.OffreId" class="btn-sm btn-primary float-right" asp-controller="Offre">Voir Plus</a>
+                    </div>
+                </div>
+            }
+
+        }
+        else
+        {
+            <div class="sufee-alert alert with-close alert-primary alert-dismissible fade show" style="margin:20%">
+                <span class="badge badge-pill badge-dark">Info</span>
+                Desoler, vous n'avez aucune Offres a votre actif' <a class="badge badge-pill badge-primary" asp-action="Create" asp-controller="Offre">Creer ma premiere Offre</a>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+
+    </div>
+</div>

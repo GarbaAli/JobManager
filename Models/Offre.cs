@@ -11,6 +11,7 @@ namespace AnnonceManager.Models
         public string IntitulePoste { get; set; } = string.Empty;
         [MaxLength(255)]
         public string Description { get; set; } = string.Empty;
+        //public string AllDetail { get; set; } = string.Empty;
         public string Lieu { get; set; } = string.Empty;
 
         public int Salaire { get; set; }
@@ -21,7 +22,7 @@ namespace AnnonceManager.Models
         public string? EntId { get; set; }
         public Entreprise Entreprise { get; set; } = new Entreprise();
 
-        //Candidat - Offre
+        //Candidat - Offre Tous les candidat de l'offre
         public ICollection<Candidature> CandidatLink { get; set; } = new List<Candidature>();
     }
 }

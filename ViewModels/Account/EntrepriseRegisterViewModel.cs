@@ -26,9 +26,9 @@ namespace AnnonceManager.ViewModels.Account
         public string AdresseEnt { get; set; } = string.Empty;
         [MinLength(10)]
         public string Description { get; set; } = string.Empty;
-        [Required]
-        [MaxLength(15)]
-        [MinLength(3)]
         public string Username { get; set; } = string.Empty;
+        [MaxLength(10)]
+        [MinLength(3)]
+        public string Pseudo { get; set; } = string.Empty;
     }
 }

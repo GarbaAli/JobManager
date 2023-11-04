@@ -26,5 +26,9 @@ namespace AnnonceManager.ViewModels.Account
         [Range(1, 20)]
         [Required]
         public int Experience { get; set; }
+        [MaxLength(10)]
+        [MinLength(3)]
+        [Remote(action: "UniquePseudo", controller: "Account")]
+        public string Pseudo { get; set; } = string.Empty;
     }
 }

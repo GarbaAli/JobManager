@@ -24,8 +24,8 @@ namespace AnnonceManager.Models
             .IsRequired();
         }
 
-        public DbSet<Offre>? Offres { get; set; }
-        public DbSet<Candidat>? Candidats { get; set; }
-        public DbSet<Entreprise>? Entreprises { get; set; }
+        public DbSet<Offre> Offres { get; set; } 
+        public DbSet<Candidat> Candidats { get; set; }
+        public DbSet<Entreprise> Entreprises { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿@model CandidatRegisterViewModel
 
 @{
-    ViewBag.Title = "Register Candidat";
+    ViewData["Title"] = "Register Candidat";
 }
 
 <div class="container">
@@ -25,6 +25,11 @@
                             <input type="text" class="form-control" asp-for="LastName">
                             <span class="small text-danger" asp-validation-for="LastName"></span>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Pseudo"></label>
+                        <input class="au-input au-input--full" asp-for="Pseudo" placeholder="Votre Pseudonyme">
+                        <span class="small text-danger" asp-validation-for="Pseudo"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Email"></label>
@@ -64,6 +69,10 @@
                     </p>
                 </div><hr />
                 <div class="alert alert-danger text text-danger" asp-validation-summary="All" role="alert">
+                    @if (ViewData["notif"] != "")
+                    {
+                        <span>@ViewData["notif"] </span>
+                    }
                 </div>
             </div>
         </div>
