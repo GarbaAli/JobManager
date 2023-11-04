@@ -13,7 +13,7 @@ namespace AnnonceManager.Models
         [Range(1, 20)]
         public int Experience { get; set; }
 
-        //Candidat - Offre
+        //Candidat - Offre Toutes les Offres du candidat
         public ICollection<Candidature> OffreLink { get; set; } = new List<Candidature>();
     }
 }

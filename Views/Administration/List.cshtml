@@ -1,0 +1,42 @@
+﻿@model IEnumerable<IdentityRole>
+
+@{
+    ViewData["Title"] = "Tous les Roles";
+}
+
+
+<div class="container mt-10">
+    <section class="au-breadcrumb2">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="au-breadcrumb-content">
+                        <div class="au-breadcrumb-left">
+                            <h1>Tous les Roles</h1>
+                        </div>
+                        <a asp-controller="Administration" asp-action="Create"  class="btn btn-dark">Ajouter Un Role</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END BREADCRUMB-->
+    <div class="row">
+    @foreach (IdentityRole item in Model)
+    {
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><strong>@item.Name</strong></h5>
+                    <p class="card-text">@item.Id</p>
+                </div>
+                <div class="card-body">
+                    <a asp-controller="Administration" asp-action="Edit" asp-route-id="@item.Id" class="btn-sm btn-dark">Modifier</a>
+                    <a asp-controller="Administration" asp-route-RoleId="@item.Id" asp-action="AddRemoveRoleUser" class="btn-sm btn-primary">Gerer les Utilisateurs</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+</div>
+

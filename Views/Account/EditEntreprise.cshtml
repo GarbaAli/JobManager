@@ -1,0 +1,64 @@
+﻿@model EntrepriseEditViewModel
+
+@{
+    ViewData["Title"] = "Modifier votre compte";
+}
+
+
+<div class="container">
+    <div class="login-wrap">
+        <div class="login-content">
+            <div class="login-form">
+                <form method="post">
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Pseudo"></label>
+                            <input type="text" class="form-control" asp-for="Pseudo">
+                            <span class="small text-danger" asp-validation-for="Pseudo"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="AdresseEnt"></label>
+                            <input type="text" class="form-control" asp-for="AdresseEnt">
+                            <span class="small text-danger" asp-validation-for="AdresseEnt"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email"></label>
+                        <input class="au-input au-input--full" asp-for="Email" placeholder="Email">
+                        <span class="small text-danger" asp-validation-for="Email"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LibelleEntreprise"></label>
+                        <input class="au-input au-input--full" asp-for="LibelleEntreprise" placeholder="Le nom de votre Entreprise">
+                        <span class="small text-danger" asp-validation-for="LibelleEntreprise"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description"></label>
+                        <textarea class="au-input au-input--full" asp-for="Description" placeholder="Une desription de votre entreprise..."></textarea>
+                        <span class="small text-danger" asp-validation-for="Description"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password"></label>
+                        <input class="au-input au-input--full" asp-for="Password" placeholder="Password">
+                        <span class="small text-danger" asp-validation-for="Password"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ConfirmPassword"></label>
+                        <input class="form-control" asp-for="ConfirmPassword">
+                        <span class="small text-danger" asp-validation-for="ConfirmPassword"></span>
+                    </div>
+
+                    <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">Valider</button>
+                   
+                </form>
+               <hr />
+                <div class="alert alert-danger text text-danger" asp-validation-summary="All" role="alert">
+                   @*  @if (ViewData["notif"] != "")
+                    {
+                        <span>@ViewData["notif"] </span>
+                    } *@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,8 @@
 using AnnonceManager.Models;
+using AnnonceManager.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,7 +17,7 @@ builder.Services.AddDbContext<AppDbContext>(
 
 //DI
 
-
+builder.Services.AddScoped<IOfferRepository, OffreRepository>();
 //Contrainte du password lors de la creation du compte
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
@@ -22,6 +25,17 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     options.Password.RequireUppercase = false;
     options.Password.RequireLowercase = false;
 }).AddEntityFrameworkStores<AppDbContext>();
+
+//Lier a la redirection  pour des personnes non connecter
+builder.Services.AddMvc(
+    options =>
+    {
+        options.EnableEndpointRouting = false;
+        var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+        options.Filters.Add(new AuthorizeFilter(policy));
+    }
+    ).AddXmlDataContractSerializerFormatters();
+builder.Services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/Login");
 
 
 var app = builder.Build();
@@ -39,10 +53,12 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Offre}/{action=Index}/{id?}");
 
 app.Run();

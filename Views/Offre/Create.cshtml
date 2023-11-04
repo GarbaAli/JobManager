@@ -1,0 +1,62 @@
+﻿@model CreateOffreViewModel
+
+@{
+    ViewData["Title"] = "Nouvelle Offre";
+    ApplicationUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+}
+
+<div class="container">
+    <div class="login-wrap">
+        <div class="login-content">
+
+            <div class="login-form">
+                <form asp-controller="Offre" asp-action="Create">
+                    <div class="form-row">
+                        <div class="col-md-8 mb-3">
+                            <input disabled value="@user.Id" type="text" class="form-control">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <input disabled value="@user.Pseudo" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="IntitulePoste" class="control-label mb-1"></label>
+                        <input id="cc-pament" asp-for="IntitulePoste" class="form-control">
+                        <span class="text-sm text-red" asp-validation-for="IntitulePoste"></span>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-8 mb-3">
+                            <label asp-for="Lieu" class="control-label mb-1"></label>
+                            <input type="text" class="form-control" asp-for="Lieu">
+                            <span class="small text-danger" asp-validation-for="Lieu"></span>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="Salaire" class="control-label mb-1"></label>
+                            <input type="text" class="form-control" asp-for="Salaire">
+                            <span class="small text-danger" asp-validation-for="Salaire"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DateLine" class="control-label mb-1"></label>
+                        <input id="cc-pament" asp-for="DateLine" class="form-control">
+                        <span class="text-sm text-red" asp-validation-for="DateLine"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label mb-1"></label>
+                        <textarea asp-for="Description" class="form-control"></textarea>
+                        <span class="text-sm text-red" asp-validation-for="Description"></span>
+                    </div>
+                    <div>
+                        <button id="payment-button" type="submit" class="btn btn-lg btn-dark btn-block">
+                            <i class="fa fa-tags fa-sm"></i>&nbsp;
+                            <span id="payment-button-amount">Nouvelle Offre</span>
+                        </button>
+                    </div>
+                </form>
+                <hr />
+                <div class="alert alert-danger text text-danger" asp-validation-summary="All" role="alert">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

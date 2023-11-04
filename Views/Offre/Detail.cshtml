@@ -1,0 +1,116 @@
+﻿@model CandidatureViewModel
+
+@{
+    ViewData["Title"] = "Detail de l'offre";
+    ApplicationUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+}
+
+<div class="container mt-10">
+    <section class="au-breadcrumb2">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="au-breadcrumb-content">
+                        <div class="au-breadcrumb-left">
+                            <h1>@Model.OffreDetail.IntitulePoste</h1>
+                        </div>
+                        
+                        @if (Model.OffreDetail.Entreprise != user) // Si l'user connecter es different du Createur de l'offre
+                        {
+                            <form asp-action="PostulerOuAnnuler" asp-controller="Offre">
+                                <input asp-for="OffreId" type="number" hidden  value="@Model.OffreId">
+                                <span asp-validation-for="OffreId"></span>
+                                <input asp-for="DejaCandidat" hidden value="@Model.DejaCandidat">
+                                    @if (Model.DejaCandidat)
+                                    {
+                                        if (Model.statusCandidature == 1)
+                                        {
+                                        <button type="submit" class="btn btn-danger">
+                                            <i class="fa fa-ban"></i> Annuler ma Candidature
+                                        </button>
+                                        }
+                                         else if (Model.statusCandidature == 0)
+                                        {
+                                            <div class="alert alert-danger" role="alert">
+                                            <strong>DESOLER</strong> votre Candidature e ete Traiter et vous n'etes pas retenu!
+                                                <i class="fa fa-frown-o"></i>
+                                             </div>
+                                        }
+                                        else if (Model.statusCandidature == 2)
+                                        {
+                                                <div class="alert alert-success" role="alert">
+                                            <strong>FELICITATION</strong> Le traitement de votre candidature est termine et vous etes <strong>retenu</strong>, Verifier votre Mail pour plus de detail
+                                                    <i class="fa fa-smile-o"></i>
+                                                </div>
+                                        }
+
+                                     }
+                                    else
+                                    {
+                                        <button type="submit" class="btn btn-dark">
+                                            <i class="fa fa-check-circle-o"></i>Je Postule a cette Offre
+                                        </button>
+                                    }                                   
+                                </form>
+                        }
+
+                    </div>
+                   <hr />
+                    @if (Model.OffreDetail.Entreprise == user)
+                    {
+                        @if (Model.OffreDetail.CandidatLink.Count() == 0)
+                        {
+                            <div class="alert alert-dark">
+                                Desoler mais votre Offre n'a encore aucun Candidat
+                            </div>
+                        }
+                        else
+                        {
+                           
+                            <div class="table-responsive table--no-card m-b-30">
+                                <table class="table table-borderless table-striped table-earning">
+                                    <thead>
+                                        <tr>
+                                            <th>date</th>
+                                            <th>Nom et Prenom</th>
+                                            <th class="text-right">Email</th>
+                                            <th class="text-right">Experience</th>
+                                            <th class="text-right">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var cand in Model.OffreDetail.CandidatLink)
+                                        {
+                                            <tr>
+                                                <td>@cand.CandDate.ToString("dddd d MMMM yyyy")</td>
+                                                <td>@cand.Candidat.FirstName  <strong>@cand.Candidat.LastName</strong></td>
+                                                <td class="text-right">@cand.Candidat.Email</td>
+                                                <td class="text-right">@cand.Candidat.Experience</td>
+                                                <td class="text-right">
+                                                    <div class="table-data-feature">
+                                                        <a asp-action="Profil" asp-controller="Account" class="item" data-toggle="tooltip" data-placement="top" title="Detail du candidat">
+                                                            <i class="zmdi zmdi-eye"></i>
+                                                        </a>
+                                                        <a class="item" data-toggle="tooltip" data-placement="top" title="Rejeter la candidature">
+                                                            <i class="fa fa-times"></i>
+                                                        </a>
+                                                        <a class="item" data-toggle="tooltip" data-placement="top" title="Valider la candidature">
+                                                            <i class="zmdi zmdi-check-circle"></i>
+                                                        </a>
+                                                       
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                    }
+                   
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END BREADCRUMB-->
+</div>
