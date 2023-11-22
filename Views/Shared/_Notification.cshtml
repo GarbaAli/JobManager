@@ -1,0 +1,16 @@
+﻿
+
+<div id="notification" class="sufee-alert alert with-close alert-@TempData["type"] alert-dismissible fade show">
+    <span class="badge badge-pill badge-@TempData["type"]">@TempData["type"]</span>
+    @TempData["message"]
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<script>
+    // Fonction pour masquer la notification après 10 secondes
+    setTimeout(function () {
+        document.getElementById("notification").style.display = "none";
+    }, 10000);
+</script>

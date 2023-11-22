@@ -18,6 +18,7 @@ builder.Services.AddDbContext<AppDbContext>(
 //DI
 
 builder.Services.AddScoped<IOfferRepository, OffreRepository>();
+builder.Services.AddScoped<ISendMail, SendMailRepository>();
 //Contrainte du password lors de la creation du compte
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {

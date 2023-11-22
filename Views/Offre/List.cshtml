@@ -7,6 +7,10 @@
 <div class="container">
     
     <div style="margin:5% 10%" class="login">
+        @if (TempData.ContainsKey("message"))
+        {
+            <partial name="_Notification" />
+        }
      @if (Model.Count() != 0)
         {
             <section class="au-breadcrumb2">
@@ -41,8 +45,9 @@
                         </p>
                         <strong>@item.Salaire XAF</strong> | @item.DateLine.ToString("dddd d MMMM yyyy")
                         <a asp-action="Detail" asp-route-OffreId="@item.OffreId" class="btn-sm btn-primary float-right" asp-controller="Offre">Voir Plus</a>
+                        <a asp-action="Delete" asp-route-OffreId="@item.OffreId" class="btn-sm btn-danger float-right mr-2" asp-controller="Offre">Supprimer</a>
                     </div>
-                </div>
+                </div> 
             }
 
         }

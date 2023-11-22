@@ -5,6 +5,7 @@ namespace AnnonceManager.ViewModels.Offres
 {
     public class CandidatureViewModel
     {
+        [Required]
         public string? CandidatId { get; set; }
         [Required]
         public int OffreId { get; set; }

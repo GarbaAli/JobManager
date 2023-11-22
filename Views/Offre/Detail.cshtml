@@ -8,6 +8,11 @@
 <div class="container mt-10">
     <section class="au-breadcrumb2">
         <div class="container">
+
+            @if (TempData.ContainsKey("message"))
+            {
+                <partial name="_Notification" />
+            }
             <div class="row">
                 <div class="col-md-12">
                     <div class="au-breadcrumb-content">
@@ -32,7 +37,7 @@
                                          else if (Model.statusCandidature == 0)
                                         {
                                             <div class="alert alert-danger" role="alert">
-                                            <strong>DESOLER</strong> votre Candidature e ete Traiter et vous n'etes pas retenu!
+                                            <strong>DESOLER</strong> votre Candidature a ete Traiter et vous n'etes pas retenu!
                                                 <i class="fa fa-frown-o"></i>
                                              </div>
                                         }
@@ -91,13 +96,44 @@
                                                         <a asp-action="Profil" asp-controller="Account" class="item" data-toggle="tooltip" data-placement="top" title="Detail du candidat">
                                                             <i class="zmdi zmdi-eye"></i>
                                                         </a>
-                                                        <a class="item" data-toggle="tooltip" data-placement="top" title="Rejeter la candidature">
-                                                            <i class="fa fa-times"></i>
-                                                        </a>
-                                                        <a class="item" data-toggle="tooltip" data-placement="top" title="Valider la candidature">
-                                                            <i class="zmdi zmdi-check-circle"></i>
-                                                        </a>
-                                                       
+                                                      
+                                                        @if (cand.Status == 1)
+                                                        {
+                                                            <form asp-action="ValiderOrRejeterCandidature">
+                                                                <input asp-for="OffreId" type="number" hidden value="@Model.OffreId">
+                                                                <span asp-validation-for="OffreId"></span>
+                                                                <input asp-for="CandidatId" type="text" hidden value="@cand.CandidatId">
+                                                                <span asp-validation-for="CandidatId"></span>
+                                                                <input name="status" type="number" hidden value="0">
+                                                                <button type="submit" class="item" data-toggle="tooltip" data-placement="top" title="Rejeter la candidature">
+                                                                    <i class="fa fa-times"></i>
+                                                                </button>
+                                                            </form>
+                                                           
+                                                            <form asp-action="ValiderOrRejeterCandidature">
+                                                                <input asp-for="OffreId" type="number" hidden value="@Model.OffreId">
+                                                                <span asp-validation-for="OffreId"></span>
+                                                                <input asp-for="CandidatId" type="text" hidden value="@cand.CandidatId">
+                                                                <span asp-validation-for="CandidatId"></span>
+                                                                <input name="status" type="number" hidden value="2">
+                                                                <button type="submit" class="item" data-toggle="tooltip" data-placement="top" title="Valider la candidature">
+                                                                    <i class="zmdi zmdi-check-circle"></i>
+                                                                </button>
+                                                            </form>
+
+
+                                                        }
+                                                        else if(cand.Status == 0)
+                                                        {
+                                                           
+                                                                <span class="badge badge-danger float-left mt-2">Candidature Rejetter <i class="fa fa-frown-o"></i></span>
+                                                         
+
+                                                        }else if(cand.Status == 2)
+                                                        {
+                                                            <span class="badge badge-success float-left mt-2">Candidature Acceptee</span>
+                                                        }
+
                                                     </div>
                                                 </td>
                                             </tr>
